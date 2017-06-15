@@ -62,10 +62,22 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        return User::create([
+    /*  \Stripe\Stripe::setApiKey(env('STRIPE_SECRET'));
+
+      $stripeToken = \Stripe\Token::create(array(
+        "card" => array(
+          "number" => $data['card_number'],
+          "exp_month" => $data['expiry_month'],
+          "exp_year" => $data['expiry_year'],
+          "cvc" => $data['cvv']
+        )
+      ));*/
+        $user = User::create([
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => bcrypt($data['password']),
         ]);
+        //$user->newSubscription('Photos', 'monthly')->create($stripeToken);
+        return $user;
     }
 }
